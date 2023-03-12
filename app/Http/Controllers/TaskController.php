@@ -60,6 +60,7 @@ class TaskController extends Controller
             'max' => '100文字以下で入力してください。',
         ];
 
+        // バリデーションの適応
         Validator::make($request->all(), $rules, $messages)->validate();
 
         // 取得したデータをtasksテーブルの各カラムに追加
@@ -91,12 +92,12 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //該当のタスクを検索
+        //該当するレコードを検索
         $task = Task::find($id);
 
-        // 前日のタスクに対して、日をまたいで編集ボタンを押した時
+        // 前日のタスクに対して、日をまたいで編集ボタンを押した時の処理
         if (empty($task)) {
-            //リダイレクト
+            //日をまたぐと該当するレコードが削除され存在しないためリダイレクト
             return redirect('/tasks');
         } else {
             return view('tasks.edit', compact('task'));
@@ -115,10 +116,10 @@ class TaskController extends Controller
         //Taskモデルからidに該当するレコードを取得して変数に保存
         $task = Task::find($id);
 
-        // 前日のタスクに対して、日をまたいで"完了"ボタンを押した時
-        // 編集画面で前日のタスクに対して、日をまたいで"編集する"ボタンを押した時
+        // 前日のタスクに対して、日をまたいで"完了"ボタンを押した時の処理
+        // 編集画面で前日のタスクに対して、日をまたいで"編集する"ボタンを押した時の処理
         if (empty($task)) {
-            //リダイレクト
+            //日をまたぐと該当するレコードが削除され存在しないためリダイレクト
             return redirect('/tasks');
         }
 
