@@ -17,20 +17,11 @@ use App\Http\Controllers\TaskController;
 
 Route::resource('tasks', TaskController::class);
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// トップページにアクセスするように変更
 Route::get('/', function () {
     return view('tasks.top');
 });
 
-// コメントアウト
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
+// urlから直接"/tasks"にアクセスされた際にログイン状況に応じてルーティング
 Route::get('/tasks', [TaskController::class, 'index'])->middleware(['auth', 'verified'])->name('tasks');
 
 Route::middleware('auth')->group(function () {
